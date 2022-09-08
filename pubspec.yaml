@@ -15,10 +15,9 @@ dependencies:
   google_fonts: ^3.0.1
   dio: ^4.0.6
   shared_preferences: ^2.0.15
+  rive_splash_screen: ^0.1.1
 
   cupertino_icons: ^1.0.2
-
-
 
 dev_dependencies:
   flutter_test:
@@ -28,7 +27,6 @@ dev_dependencies:
   flutter_lints: ^2.0.0
 
 flutter:
-
   uses-material-design: true
   assets:
-    - assets/images/book_store_logo1.png
+    - assets/images/
