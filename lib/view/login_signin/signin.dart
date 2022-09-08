@@ -1,6 +1,7 @@
 import 'package:book_store/Text_fields/number_text_fields.dart';
 import 'package:book_store/common/MyButtonText.dart';
 import 'package:book_store/common/bordered_container.dart';
+import 'package:book_store/view/home/home.dart';
 import 'package:book_store/view/signup_register/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:book_store/utilz/theme.dart';
@@ -68,7 +69,8 @@ class Signin extends StatelessWidget {
           padding: const EdgeInsets.only(top: 10),
           child: TextButton(
             onPressed: () {
-              // Navigator.pop(context);
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => Home()));
             },
             child:
                 const BorderedContainer(child: MyButtonText(text: 'Sign in')),
@@ -97,9 +99,9 @@ class Signin extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => Signup()));
-            },
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Signup()));
+                  },
                   child: Text(
                     'Register',
                     style: GoogleFonts.cairo(
