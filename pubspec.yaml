@@ -1,0 +1,34 @@
+name: book_store
+description: A new Flutter project.
+
+publish_to:
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.17.6 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  intl: ^0.17.0
+  google_fonts: ^3.0.1
+  dio: ^4.0.6
+  shared_preferences: ^2.0.15
+
+  cupertino_icons: ^1.0.2
+
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  get: ^4.6.5
+
+  flutter_lints: ^2.0.0
+
+flutter:
+
+  uses-material-design: true
+  assets:
+    - assets/images/book_store_logo1.png
