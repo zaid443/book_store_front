@@ -1,8 +1,8 @@
+import 'package:book_store/view/home/home.dart';
 import 'package:book_store/view/signup_register/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'view/login_signin/signin.dart';
-import 'package:rive_splash_screen/rive_splash_screen.dart';
 
 Future<void> main() async {
   runApp(const MyApp());
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Signin(),
+      home:  Home(),
     );
   }
 }

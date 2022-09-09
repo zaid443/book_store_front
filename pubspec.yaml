@@ -16,8 +16,10 @@ dependencies:
   dio: ^4.0.6
   shared_preferences: ^2.0.15
   rive_splash_screen: ^0.1.1
+  flutter_svg: ^1.1.4
 
   cupertino_icons: ^1.0.2
+  scroll_snap_list: ^0.9.1
 
 dev_dependencies:
   flutter_test:
