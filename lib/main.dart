@@ -1,3 +1,4 @@
+import 'package:book_store/common/navbar.dart';
 import 'package:book_store/view/home/home.dart';
 import 'package:book_store/view/signup_register/signup.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home:  Home(),
+      home: Demonav(),
     );
   }
 }

@@ -3,7 +3,14 @@ class Books {
   final String name;
   final String auther;
   final String discrption;
-  final int rate;
-
-  Books({required this.cover,required this.name, required this.auther, required this.discrption,required this.rate});
+  final double rate;
+  final double price;
+  Books(
+      {required this.cover,
+      required this.name,
+      required this.auther,
+      required this.discrption,
+      required this.rate,
+      required this.price,
+      });
 }
