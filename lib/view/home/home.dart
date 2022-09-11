@@ -13,6 +13,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:get/get.dart';
 import '../../common/book.dart';
 import '../../common/horizontal_card_list.dart';
+import '../../common/specialcards.dart';
 import '../../common/vertical_card_list.dart';
 
 class Home extends StatefulWidget {
@@ -32,13 +33,13 @@ class _HomeState extends State<Home> {
           children: [
             ClipPath(
               clipper: Customshape(),
-              child: Container(height: 300, color: Color(0xff073b4c)),
+              child: Container(height: 300, color: const Color(0xff073b4c)),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Padding(
-                  padding: EdgeInsets.only(top: 60, left: 25, right: 25),
+                  padding: const EdgeInsets.only(top: 60, left: 25, right: 25),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -58,7 +59,7 @@ class _HomeState extends State<Home> {
                     ],
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 SizedBox(
                   height: 200,
                   child: CarouselSlider(
@@ -98,7 +99,7 @@ class _HomeState extends State<Home> {
                     SizedBox(
                       height: 250,
                       child: ListView.builder(
-                          physics: BouncingScrollPhysics(),
+                          physics: const BouncingScrollPhysics(),
                           scrollDirection: Axis.horizontal,
                           itemCount: defaultBookList.length,
                           itemBuilder: (context, int index) {
@@ -107,7 +108,12 @@ class _HomeState extends State<Home> {
                                 auther: defaultBookList[index].auther,
                                 rate: defaultBookList[index].rate,
                                 name: defaultBookList[index].name,
-                                rateSize: 15);
+                              rateSize: 15,
+                              onPressed: (Book book) {
+                                Get.to(() => BookDetailsScreen(book: book));
+                              },
+                              item: defaultBookList[index],
+                            );
                           }),
                     ),
                   ],
@@ -133,6 +139,10 @@ class _HomeState extends State<Home> {
                             name: defaultBookList[index].name,
                             rateSize: 15,
                             price: defaultBookList[index].price,
+                            item: defaultBookList[index],
+                            onPressed: (Book book) {
+                              Get.to(() => BookDetailsScreen(book: book));
+                            },
                           ),
                         ),
                       )
@@ -148,87 +158,3 @@ class _HomeState extends State<Home> {
   }
 }
 
-class BookCard extends StatelessWidget {
-  const BookCard({
-    Key? key,
-    required this.item,
-    required this.onPressed,
-  }) : super(key: key);
-  final Book item;
-  final Function(Book book) onPressed;
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () => onPressed(item),
-      child: Container(
-          decoration: BoxDecoration(
-              color: Color.fromARGB(255, 246, 239, 239),
-              borderRadius: BorderRadius.circular(10)),
-          margin: const EdgeInsets.symmetric(horizontal: 0.5),
-          child: Row(
-            children: [
-              Container(
-                decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(10)),
-                margin: EdgeInsets.only(left: 10, top: 10, bottom: 10),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Image.asset(
-                    item.cover,
-                    height: 350,
-                    fit: BoxFit.fill,
-                  ),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(left: 8),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      item.name,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: GoogleFonts.cairo(
-                          fontSize: 22, fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      item.auther,
-                      style: GoogleFonts.cairo(
-                          color: Color.fromARGB(166, 0, 0, 0),
-                          fontSize: 18,
-                          fontWeight: FontWeight.normal),
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    RatingStarsWidget(
-                      size: 20,
-                      rate: item.rate,
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    Text(
-                      '${item.price.toString()}\$',
-                      style: GoogleFonts.cairo(
-                          fontSize: 16, fontWeight: FontWeight.w400),
-                    ),
-                    Text(
-                      'Tap to see more >>',
-                      style: GoogleFonts.cairo(
-                        color: Colors.black54,
-                        fontSize: 16,
-                      ),
-                    )
-                  ],
-                ),
-              )
-            ],
-          )),
-    );
-  }
-}
