@@ -34,7 +34,7 @@ class HorizontalList extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
               child: Image.asset(
                 cover,
-                fit: BoxFit.cover,
+                fit: BoxFit.fill,
               ),
             ),
           ),

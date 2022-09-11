@@ -1,11 +1,11 @@
-class Books {
+class Book {
   final String cover;
   final String name;
   final String auther;
   final String discrption;
   final double rate;
   final double price;
-  Books(
+  Book(
       {required this.cover,
       required this.name,
       required this.auther,

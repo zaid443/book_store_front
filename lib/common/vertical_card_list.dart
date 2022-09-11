@@ -2,8 +2,8 @@ import 'package:book_store/common/ratin_star.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class VericalList extends StatefulWidget {
-  VericalList(
+class BookCardExtended extends StatefulWidget {
+  const BookCardExtended(
       {Key? key,
       required this.cover,
       required this.name,
@@ -20,32 +20,32 @@ class VericalList extends StatefulWidget {
   final double rateSize;
 
   @override
-  State<VericalList> createState() => _VericalListState();
+  State<BookCardExtended> createState() => _BookCardExtendedState();
 }
 
-class _VericalListState extends State<VericalList> {
+class _BookCardExtendedState extends State<BookCardExtended> {
+  bool savestat = false;
   @override
   Widget build(BuildContext context) {
-    bool savestat = false;
     return Container(
       height: 150,
-      padding: EdgeInsets.all(8),
-      margin: EdgeInsets.only(bottom: 10),
+      padding: const EdgeInsets.all(8),
+      margin: const EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
-        color: Color.fromARGB(255, 246, 239, 239),
+        color: const Color.fromARGB(255, 246, 239, 239),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Row(
-        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        
         children: [
-          Container(
+          SizedBox(
             height: 135,
             width: 95,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: Image.asset(
                 widget.cover,
-                fit: BoxFit.cover,
+                fit: BoxFit.fill,
               ),
             ),
           ),
@@ -82,17 +82,18 @@ class _VericalListState extends State<VericalList> {
               )
             ],
           ),
-          Spacer(),
-          Container(
-              child: IconButton(
-                  iconSize: 30,
-                  color: Color(0xffE9C46A),
-                  onPressed: () {
-                    savestat = !savestat;
-                  },
-                  icon: savestat
-                      ? const Icon(Icons.bookmark)
-                      : const Icon(Icons.bookmark_outline)))
+          const Spacer(),
+          IconButton(
+              iconSize: 30,
+              color: const Color(0xffE9C46A),
+              onPressed: () {
+                setState(() {
+                  savestat = !savestat;
+                });
+              },
+              icon: savestat
+                  ? const Icon(Icons.bookmark)
+                  : const Icon(Icons.bookmark_outline))
         ],
       ),
     );
