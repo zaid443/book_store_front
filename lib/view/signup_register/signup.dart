@@ -1,6 +1,7 @@
 import 'package:book_store/Text_fields/number_text_fields.dart';
 import 'package:book_store/common/MyButtonText.dart';
 import 'package:book_store/common/bordered_container.dart';
+import 'package:book_store/common/navbar.dart';
 import 'package:book_store/view/login_signin/signin.dart';
 import 'package:flutter/material.dart';
 import 'package:book_store/utilz/theme.dart';
@@ -81,7 +82,7 @@ class Signup extends StatelessWidget {
           child: TextButton(
             onPressed: () {
               Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Home()));
+                  context, MaterialPageRoute(builder: (context) => NavBarrr()));
             },
             child:
                 const BorderedContainer(child: MyButtonText(text: 'Sign up')),

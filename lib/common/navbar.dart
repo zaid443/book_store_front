@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:water_drop_nav_bar/water_drop_nav_bar.dart';
 
-class Demonav extends StatelessWidget {
-  const Demonav({Key? key}) : super(key: key);
+class NavBarrr extends StatelessWidget {
+  const NavBarrr({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
