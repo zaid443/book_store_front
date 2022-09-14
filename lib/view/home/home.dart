@@ -4,6 +4,7 @@ import 'package:book_store/common/default_book.dart';
 import 'package:book_store/common/ratin_star.dart';
 import 'package:book_store/view/home/book_details_screen.dart';
 import 'package:book_store/view/home/shape.dart';
+import 'package:book_store/view/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -52,10 +53,15 @@ class _HomeState extends State<Home> {
                             fontSize: 24,
                             fontWeight: FontWeight.bold),
                       ),
-                      SvgPicture.asset(
-                        'assets/images/profile.svg',
-                        color: Colors.white,
-                        height: 35,
+                      GestureDetector(
+                        onTap: (() {
+                        Get.to(Profile_page()) ;
+                        }),
+                        child: SvgPicture.asset(
+                          'assets/images/profile.svg',
+                          color: Colors.white,
+                          height: 35,
+                        ),
                       ),
                     ],
                   ),

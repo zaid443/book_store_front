@@ -4,11 +4,12 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../common/book.dart';
+import '../Saved/savedbooklist.dart';
 
 class BookDetailsScreen extends StatefulWidget {
   const BookDetailsScreen({Key? key, required this.book}) : super(key: key);
   final Book book;
-
+  
   @override
   State<BookDetailsScreen> createState() => _BookDetailsScreenState();
 }
@@ -85,6 +86,11 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                 setState(() {
                                   savestat = !savestat;
                                 });
+                                if (savestat == true) {
+                                    saveBooks.add(widget.book);
+                                    } else {
+                                    saveBooks.remove(widget.book);
+                                    }
                               },
                               icon: savestat
                                   ? const Icon(Icons.bookmark)

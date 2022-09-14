@@ -3,6 +3,7 @@ import 'package:book_store/view/home/home.dart';
 import 'package:book_store/view/signup_register/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'view/Saved/saved_page.dart';
 import 'view/login_signin/signin.dart';
 
 Future<void> main() async {
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Signin(),
+      home: NavBarrr(),
     );
   }
 }

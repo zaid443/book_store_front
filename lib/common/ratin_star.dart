@@ -9,7 +9,7 @@ class RatingStarsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     
     return RatingStars(
-        editable: true,
+        editable: false,
         rating: rate,
         color: Colors.amber,
         iconSize: size,

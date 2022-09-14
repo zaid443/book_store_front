@@ -3,10 +3,11 @@ import 'package:book_store/view/Saved/savedbooklist.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'book.dart';
+import '../../common/book.dart';
 
-class BookCardExtended extends StatefulWidget {
-  const BookCardExtended(
+
+class SavedBookCard extends StatefulWidget {
+  const SavedBookCard(
       {Key? key,
       required this.cover,
       required this.name,
@@ -24,11 +25,11 @@ class BookCardExtended extends StatefulWidget {
   final Book item;
   final Function(Book book) onPressed;
   @override
-  State<BookCardExtended> createState() => _BookCardExtendedState();
+  State<SavedBookCard> createState() => _SavedBookCardState();
 }
 
-class _BookCardExtendedState extends State<BookCardExtended> {
-  bool savestat = false;
+class _SavedBookCardState extends State<SavedBookCard> {
+  bool savestat = true;
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -103,7 +104,7 @@ class _BookCardExtendedState extends State<BookCardExtended> {
                   }
                 },
                 icon: savestat
-                    ? const Icon(Icons.bookmark) 
+                    ? const Icon(Icons.bookmark)
                     : const Icon(Icons.bookmark_outline))
           ],
         ),

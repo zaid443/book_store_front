@@ -74,7 +74,9 @@ class Signin extends StatelessWidget {
                   context, MaterialPageRoute(builder: (context) =>  NavBarrr()));
             },
             child:
-                const BorderedContainer(child: MyButtonText(text: 'Sign in')),
+                const BorderedContainer( height: 61,
+                    width: 173,color: AppTheme.mainColor ,
+                    child: MyButtonText(text: 'Sign In', color:AppTheme.textwhite,fontSize: 26,)),
           ),
         ),
         Padding(

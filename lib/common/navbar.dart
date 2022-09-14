@@ -2,7 +2,9 @@ import 'package:book_store/view/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:water_drop_nav_bar/water_drop_nav_bar.dart';
+import 'package:ionicons/ionicons.dart';
 
+import '../view/Saved/saved_page.dart';
 class NavBarrr extends StatelessWidget {
   const NavBarrr({Key? key}) : super(key: key);
 
@@ -61,14 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 color: Colors.red[400],
               ),
             ),
-            Container(
-              alignment: Alignment.center,
-              child: Icon(
-                Icons.bookmark,
-                size: 56,
-                color: Colors.green[400],
-              ),
-            ),
+            SavedPage(),
             Container(
               alignment: Alignment.center,
               child: Icon(
@@ -97,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
               outlinedIcon: Icons.home_outlined,
             ),
             BarItem(
-                filledIcon: Icons.search_sharp,
+                filledIcon: Ionicons.search_sharp,
                 outlinedIcon: Icons.search_outlined),
             BarItem(
               filledIcon: Icons.bookmark,
