@@ -1,19 +1,22 @@
 import 'package:book_store/common/ratin_star.dart';
 import 'package:book_store/view/Saved/savedbooklist.dart';
+import 'package:book_store/view/cart/cart_book_list.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'book.dart';
+import '../../common/book.dart';
 
-class BookCardExtended extends StatefulWidget {
-  const BookCardExtended( 
+class CartBookCard extends StatefulWidget {
+  const CartBookCard(
       {Key? key,
       required this.cover,
       required this.name,
       required this.auther,
       required this.rate,
       required this.rateSize,
-      required this.price, required this.item, required this.onPressed})
+      required this.price,
+      required this.item,
+      required this.onPressed})
       : super(key: key);
   final String cover;
   final String name;
@@ -24,11 +27,11 @@ class BookCardExtended extends StatefulWidget {
   final Book item;
   final Function(Book book) onPressed;
   @override
-  State<BookCardExtended> createState() => _BookCardExtendedState();
+  State<CartBookCard> createState() => _CartBookCardState();
 }
 
-class _BookCardExtendedState extends State<BookCardExtended> {
-  bool savestat = false;
+class _CartBookCardState extends State<CartBookCard> {
+  bool savestat = true;
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -38,11 +41,10 @@ class _BookCardExtendedState extends State<BookCardExtended> {
         padding: const EdgeInsets.all(8),
         margin: const EdgeInsets.only(bottom: 10),
         decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 246, 239, 239),
+          color: Colors.white,
           borderRadius: BorderRadius.circular(10),
         ),
         child: Row(
-          
           children: [
             SizedBox(
               height: 135,
@@ -77,7 +79,7 @@ class _BookCardExtendedState extends State<BookCardExtended> {
                 const SizedBox(
                   height: 5,
                 ),
-                RatingStarsWidget(rate: widget.rate, size: widget.rateSize),
+                Text('${widget.item.pieces} Pcs'),
                 const SizedBox(
                   height: 5,
                 ),
@@ -91,23 +93,15 @@ class _BookCardExtendedState extends State<BookCardExtended> {
             const Spacer(),
             IconButton(
                 iconSize: 30,
-                color: const Color(0xffE9C46A),
+                color: const Color(0xff931621),
                 onPressed: () {
-                  setState(() {
-                    savestat = !savestat;
-                    widget.item.saveMark = !widget.item.saveMark;
-                  });
-                  if (savestat && widget.item.saveMark) {
-                    saveBooks.add(widget.item);
-                    
-                  } else {
-                    saveBooks.remove(widget.item);
-                  
-                  }
+                  cart_books.remove(widget.item);
+                  total_price =
+                      total_price - (widget.item.pieces * widget.item.price);
+                  total_piece = total_piece - widget.item.pieces;
+                  widget.item.pieces = 0;
                 },
-                icon: widget.item.saveMark 
-                    ? const Icon(Icons.bookmark) 
-                    : const Icon(Icons.bookmark_outline))
+                icon: const Icon(Icons.do_disturb_on_outlined))
           ],
         ),
       ),

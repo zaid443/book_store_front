@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../common/book.dart';
 import '../Saved/savedbooklist.dart';
+import '../cart/cart_book_list.dart';
 
 class BookDetailsScreen extends StatefulWidget {
   const BookDetailsScreen({Key? key, required this.book}) : super(key: key);
@@ -85,14 +86,15 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                               onPressed: () {
                                 setState(() {
                                   savestat = !savestat;
+                                  widget.book.saveMark = !widget.book.saveMark;
                                 });
-                                if (savestat == true) {
+                                if (savestat == true && widget.book.saveMark == true ) {
                                     saveBooks.add(widget.book);
                                     } else {
                                     saveBooks.remove(widget.book);
                                     }
                               },
-                              icon: savestat
+                              icon: widget.book.saveMark == true
                                   ? const Icon(Icons.bookmark)
                                   : const Icon(Icons.bookmark_outline))
                         ],
@@ -206,17 +208,25 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                           ),
                           Expanded(
                             flex: 3,
-                            child: Container(
-                              height: 50,
-                              decoration: BoxDecoration(
-                                  color: const Color(0xff073b4c),
-                                  borderRadius: BorderRadius.circular(8)),
-                              child: Center(
-                                child: Text('Add To Cart',
-                                    style: GoogleFonts.cairo(
-                                        fontSize: 14,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold)),
+                            child: GestureDetector(
+                              onTap: () {
+                                cart_books.add(widget.book);
+                                total_price = total_price + (widget.book.price * quantity);
+                                total_piece = total_piece + quantity;
+                                widget.book.pieces = widget.book.pieces + quantity;
+                              },
+                              child: Container(
+                                height: 50,
+                                decoration: BoxDecoration(
+                                    color: const Color(0xff073b4c),
+                                    borderRadius: BorderRadius.circular(8)),
+                                child: Center(
+                                  child: Text('Add To Cart',
+                                      style: GoogleFonts.cairo(
+                                          fontSize: 14,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold)),
+                                ),
                               ),
                             ),
                           ),

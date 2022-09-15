@@ -5,12 +5,16 @@ class Book {
   final String discrption;
   final double rate;
   final double price;
-  Book(
+  bool saveMark;
+  int pieces;
+  Book( 
       {required this.cover,
       required this.name,
       required this.auther,
       required this.discrption,
       required this.rate,
       required this.price,
+    required this.saveMark,
+    required this.pieces
       });
 }

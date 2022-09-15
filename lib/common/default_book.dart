@@ -8,7 +8,10 @@ List<Book> defaultBookList = [
       discrption:
           'Anna Karenina (Keira Knightley), the wife of a Russian imperialminister (Jude Law), creates a high-society scandal by an affairwith Count Vronsky (Aaron Taylor-Johnson), a dashing cavalry officer in 19th-century St. Petersburg.',
       price : 10.0,
-      rate: 4),
+      rate: 4,
+      saveMark: false, pieces: 0,
+      
+      ),
   Book(
       cover: 'assets/images/2.jpg',
       name: 'The Da Vinci Code',
@@ -16,7 +19,8 @@ List<Book> defaultBookList = [
       discrption:
           'Anna Karenina (Keira Knightley), the wife of a Russian imperialminister (Jude Law), creates a high-society scandal by an affairwith Count Vronsky (Aaron Taylor-Johnson), a dashing cavalry officer in 19th-century St. Petersburg.',
       price : 10.0,
-      rate: 4),
+      rate: 4,pieces: 0,
+      saveMark: false),
   Book(
       cover: 'assets/images/3.jpg',
       name: 'Anna Karenina',
@@ -24,7 +28,8 @@ List<Book> defaultBookList = [
       discrption:
           'Anna Karenina (Keira Knightley), the wife of a Russian imperialminister (Jude Law), creates a high-society scandal by an affairwith Count Vronsky (Aaron Taylor-Johnson), a dashing cavalry officer in 19th-century St. Petersburg.',
       rate: 5,
-      price : 10.0
+      price: 10.0,
+      saveMark: false,pieces: 0,
       ),
   Book(
       cover: 'assets/images/4.jpg',
@@ -33,7 +38,8 @@ List<Book> defaultBookList = [
       discrption:
           'Anna Karenina (Keira Knightley), the wife of a Russian imperialminister (Jude Law), creates a high-society scandal by an affairwith Count Vronsky (Aaron Taylor-Johnson), a dashing cavalry officer in 19th-century St. Petersburg.',
       rate: 5,
-      price : 10.0
+      price: 10.0,
+      saveMark: false,pieces: 0,
       ),
   Book(
       cover: 'assets/images/5.jpg',
@@ -42,7 +48,8 @@ List<Book> defaultBookList = [
       discrption:
           'Anna Karenina (Keira Knightley), the wife of a Russian imperialminister (Jude Law), creates a high-society scandal by an affairwith Count Vronsky (Aaron Taylor-Johnson), a dashing cavalry officer in 19th-century St. Petersburg.',
       rate: 4,
-      price : 10.0
+      price: 10.0,
+      saveMark: false,pieces: 0,
       ),
 ];
 

@@ -31,6 +31,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: Stack(
           children: [
             ClipPath(

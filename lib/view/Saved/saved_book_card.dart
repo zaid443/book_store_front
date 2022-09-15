@@ -96,14 +96,17 @@ class _SavedBookCardState extends State<SavedBookCard> {
                 onPressed: () {
                   setState(() {
                     savestat = !savestat;
+                    widget.item.saveMark = !widget.item.saveMark;
                   });
-                  if (savestat == true) {
+                  if (savestat && widget.item.saveMark) {
                     saveBooks.add(widget.item);
+                    
                   } else {
                     saveBooks.remove(widget.item);
+                    
                   }
                 },
-                icon: savestat
+                icon: widget.item.saveMark 
                     ? const Icon(Icons.bookmark)
                     : const Icon(Icons.bookmark_outline))
           ],

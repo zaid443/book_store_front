@@ -1,3 +1,4 @@
+import 'package:book_store/view/cart/cart_page.dart';
 import 'package:book_store/view/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -64,14 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             SavedPage(),
-            Container(
-              alignment: Alignment.center,
-              child: Icon(
-                Icons.shopping_cart,
-                size: 56,
-                color: Colors.blue[400],
-              ),
-            ),
+            Cart(),
           ],
         ),
         bottomNavigationBar: WaterDropNavBar(
