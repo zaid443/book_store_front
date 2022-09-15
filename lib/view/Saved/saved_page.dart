@@ -20,7 +20,6 @@ class _SavedPageState extends State<SavedPage> {
   Widget build(BuildContext context) {
     if (saveBooks.isEmpty) {
       return Scaffold(
-        backgroundColor: Colors.white,
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
@@ -47,7 +46,6 @@ class _SavedPageState extends State<SavedPage> {
       );
     } else {
       return Scaffold(
-        backgroundColor: Colors.white,
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(

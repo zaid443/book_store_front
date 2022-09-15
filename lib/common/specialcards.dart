@@ -18,7 +18,7 @@ class BookCard extends StatelessWidget {
       onTap: () => onPressed(item),
       child: Container(
           decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 246, 239, 239),
+              color: Colors.white,
               borderRadius: BorderRadius.circular(10)),
           margin: const EdgeInsets.symmetric(horizontal: 0.5),
           child: Row(

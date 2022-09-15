@@ -38,7 +38,7 @@ class _BookCardExtendedState extends State<BookCardExtended> {
         padding: const EdgeInsets.all(8),
         margin: const EdgeInsets.only(bottom: 10),
         decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 246, 239, 239),
+          color:  Colors.white,
           borderRadius: BorderRadius.circular(10),
         ),
         child: Row(

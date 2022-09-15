@@ -1,5 +1,6 @@
 import 'package:book_store/view/cart/cart_page.dart';
 import 'package:book_store/view/home/home.dart';
+import 'package:book_store/view/search/search_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:water_drop_nav_bar/water_drop_nav_bar.dart';
@@ -56,14 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
           controller: pageController,
           children: <Widget>[
             Home(),
-            Container(
-              alignment: Alignment.center,
-              child: Icon(
-                Icons.search_off_outlined,
-                size: 56,
-                color: Colors.red[400],
-              ),
-            ),
+            Search(),
             SavedPage(),
             Cart(),
           ],

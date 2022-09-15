@@ -6,8 +6,8 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../common/book.dart';
 
 
-class SavedBookCard extends StatefulWidget {
-  const SavedBookCard(
+class SearchCard extends StatefulWidget {
+  const SearchCard(
       {Key? key,
       required this.cover,
       required this.name,
@@ -25,10 +25,10 @@ class SavedBookCard extends StatefulWidget {
   final Book item;
   final Function(Book book) onPressed;
   @override
-  State<SavedBookCard> createState() => _SavedBookCardState();
+  State<SearchCard> createState() => _SearchCardState();
 }
 
-class _SavedBookCardState extends State<SavedBookCard> {
+class _SearchCardState extends State<SearchCard> {
   bool savestat = true;
   @override
   Widget build(BuildContext context) {
