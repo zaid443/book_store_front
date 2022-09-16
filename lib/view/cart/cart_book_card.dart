@@ -3,7 +3,8 @@ import 'package:book_store/view/Saved/savedbooklist.dart';
 import 'package:book_store/view/cart/cart_book_list.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:panara_dialogs/panara_dialogs.dart';
+import 'package:get/get.dart';
 import '../../common/book.dart';
 
 class CartBookCard extends StatefulWidget {
@@ -95,11 +96,28 @@ class _CartBookCardState extends State<CartBookCard> {
                 iconSize: 30,
                 color: const Color(0xff931621),
                 onPressed: () {
-                  cart_books.remove(widget.item);
-                  total_price =
+                  setState(() {
+                    PanaraConfirmDialog.showAnimatedGrow(
+                      context,
+                      title: "Remov from Cart",
+                      message: "Do you want to remove this Book?",
+                      confirmButtonText: "Cancel",
+                      cancelButtonText: "Remove",
+                      onTapCancel: () {
+                        cart_books.remove(widget.item);
+                        total_price =
                       total_price - (widget.item.pieces * widget.item.price);
-                  total_piece = total_piece - widget.item.pieces;
-                  widget.item.pieces = 0;
+                        total_piece = total_piece - widget.item.pieces;
+                        widget.item.pieces = 0;
+                        Get.back();
+                      },
+                      onTapConfirm: () {
+                        Get.back();
+                      },
+                      color: const Color(0xff931621),
+                      panaraDialogType: PanaraDialogType.custom,
+                    );
+                  });
                 },
                 icon: const Icon(Icons.do_disturb_on_outlined))
           ],

@@ -3,7 +3,7 @@ import 'package:book_store/view/cart/cart_book_list.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
-
+import 'package:panara_dialogs/panara_dialogs.dart';
 import '../../common/book.dart';
 import '../home/book_details_screen.dart';
 
@@ -17,6 +17,7 @@ class Cart extends StatefulWidget {
 class _CartState extends State<Cart> {
   @override
   Widget build(BuildContext context) {
+    
     if (cart_books.isEmpty) {
       return Scaffold(
         body: Column(
@@ -83,7 +84,21 @@ class _CartState extends State<Cart> {
                       const SizedBox(
                         height: 40,
                       ),
-                      GestureDetector(
+                      InkWell(
+                        
+                        onTap: () {
+                          PanaraInfoDialog.showAnimatedGrow(
+                            context,
+                            title: "Hello",
+                            message: "There is no Items in the Cart",
+                            buttonText: 'Okay',
+                            onTapDismiss: () {
+                              Get.back();
+                            },
+                            color: Color(0xff073B4C),
+                            panaraDialogType: PanaraDialogType.custom,
+                          );
+                        },
                         child: Container(
                           height: 50,
                           width: 150,
@@ -190,7 +205,24 @@ class _CartState extends State<Cart> {
                       const SizedBox(
                         height: 25,
                       ),
-                      GestureDetector(
+                      InkWell(
+                        onTap: () {
+                          PanaraConfirmDialog.showAnimatedGrow(
+                            context,
+                            title: "Buy",
+                            message: "Press Confirm to countinue.",
+                            confirmButtonText: "Confirm",
+                            cancelButtonText: "Cancel",
+                            onTapCancel: () {
+                              Get.back();
+                            },
+                            onTapConfirm: () {
+                              Get.back();
+                            },
+                            color: Color(0xff073B4C),
+                            panaraDialogType: PanaraDialogType.custom,
+                          );
+                        },
                         child: Container(
                           height: 50,
                           width: 150,

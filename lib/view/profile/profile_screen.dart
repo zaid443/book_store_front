@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
+import 'package:panara_dialogs/panara_dialogs.dart';
 
 class Profile_page extends StatelessWidget {
   const Profile_page({Key? key}) : super(key: key);
@@ -97,19 +98,38 @@ class Profile_page extends StatelessWidget {
                 const SizedBox(
                   height: 50,
                 ),
-                TextButton(
-                  onPressed: AuthService.signOut,
-                  child: BorderedContainer(
-                      color: Color(0xCC931621),
-                      width: 120,
+                Center(
+                  child: InkWell(
+                    onTap: () {
+                      PanaraConfirmDialog.showAnimatedGrow(
+                        context,
+                        title: "Sign Out",
+                        message: "Do you want to Sign Out ?",
+                        confirmButtonText: "No",
+                        cancelButtonText: "Yes",
+                        onTapCancel: AuthService.signOut,
+                        onTapConfirm: () {
+                          Get.back();
+                        },
+                        color: Color(0xCC931621),
+                        panaraDialogType: PanaraDialogType.custom,
+                      );
+                    },
+                    child: Container(
                       height: 50,
+                      width: 120,
+                      decoration: BoxDecoration(
+                          color: Color(0xCC931621),
+                          borderRadius: BorderRadius.circular(10)),
                       child: Center(
                         child: Text('Sign Out ',
                             style: GoogleFonts.cairo(
                                 color: AppTheme.textwhite,
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold)),
-                      )),
+                      ),
+                    ),
+                  ),
                 )
               ],
             )
@@ -118,3 +138,10 @@ class Profile_page extends StatelessWidget {
         );
   }
 }
+
+
+
+
+
+
+

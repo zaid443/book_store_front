@@ -3,6 +3,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:panara_dialogs/panara_dialogs.dart';
 import '../../common/book.dart';
 import '../Saved/savedbooklist.dart';
 import '../cart/cart_book_list.dart';
@@ -107,7 +108,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                         height: 85,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(13),
-                            color: const Color.fromARGB(59, 253, 203, 86)),
+                            color: const Color.fromARGB(56, 253, 203, 86)),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
@@ -165,7 +166,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                             child: Container(
                               height: 50,
                               decoration: BoxDecoration(
-                                  color: const Color.fromARGB(59, 253, 203, 86),
+                                  color: Color.fromARGB(56, 253, 203, 86),
                                   borderRadius: BorderRadius.circular(8)),
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
@@ -210,10 +211,27 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                             flex: 3,
                             child: GestureDetector(
                               onTap: () {
-                                cart_books.add(widget.book);
+                                PanaraConfirmDialog.showAnimatedGrow(
+                                  context,
+                                  
+                                  title: "Add to cart",
+                                  message:
+                                      "Do you want to Add this Book to Cart?",
+                                  confirmButtonText: "Add",
+                                  cancelButtonText: "Cancel",
+                                  onTapCancel: () {
+                                    Get.back();
+                                  },
+                                  onTapConfirm: () {
+                                    cart_books.add(widget.book);
                                 total_price = total_price + (widget.book.price * quantity);
                                 total_piece = total_piece + quantity;
                                 widget.book.pieces = widget.book.pieces + quantity;
+                                    Get.back();
+                                  },
+                                  color: Color(0xff073B4C),
+                                  panaraDialogType: PanaraDialogType.custom,
+                                );
                               },
                               child: Container(
                                 height: 50,
