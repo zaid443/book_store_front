@@ -1,90 +1,61 @@
-import 'package:book_store/view/Saved/saved_book_card.dart';
+import 'package:book_store/common/book_model.dart';
+import 'package:book_store/common/vertical_card_list.dart';
+import 'package:book_store/controllers/home_controller.dart';
+import 'package:book_store/controllers/saved_books_controller.dart';
+import 'package:book_store/utils/theme.dart';
+import 'package:book_store/view/home/book_details_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
-import '../../common/book.dart';
-import '../../common/default_book.dart';
-import '../../common/vertical_card_list.dart';
-import '../home/book_details_screen.dart';
-import 'savedbooklist.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-class SavedPage extends StatefulWidget {
-  const SavedPage({Key? key}) : super(key: key);
-
-  @override
-  State<SavedPage> createState() => _SavedPageState();
-}
-
-class _SavedPageState extends State<SavedPage> {
+class SavedPage extends StatelessWidget {
+  SavedPage({Key? key}) : super(key: key);
+  final SavedBooksController savedBooksController = Get.put(SavedBooksController());
   @override
   Widget build(BuildContext context) {
-    if (saveBooks.isEmpty) {
-      return Scaffold(
-        body: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 50),
-                child: Center(
-                    child:
-                        Text('Saved', style: GoogleFonts.cairo(fontSize: 25))),
-              ),
-              const SizedBox(
-                height: 280,
-              ),
-              Center(
-                child: Text(
-                  'No Saved Books',
-                  style: GoogleFonts.cairo(fontSize: 30, color: Colors.black45),
-                ),
-              )
-            ],
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Saved',
+          style: GoogleFonts.cairo(fontSize: 25, textStyle: const TextStyle(color: Colors.black)),
         ),
-      );
-    } else {
-      return Scaffold(
-        body: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 50),
-                child: Center(
-                    child:
-                        Text('Saved', style: GoogleFonts.cairo(fontSize: 25))),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
-                child: Column(
-                  children: List.generate(
-                    saveBooks.length,
-                    (index) => SavedBookCard(
-                      cover: saveBooks[index].cover,
-                      auther: saveBooks[index].auther,
-                      rate: saveBooks[index].rate,
-                      name: saveBooks[index].name,
-                      rateSize: 15,
-                      price: saveBooks[index].price,
-                      item: saveBooks[index],
-                      onPressed: (Book book) {
-                        Get.to(() => BookDetailsScreen(book: book));
-                      },
-                    ),
-                  ),
-                ),
-              )
-            ],
-          ),
-        ),
-      );
-    }
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+      ),
+      body: GetBuilder<SavedBooksController>(builder: (_) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+          child: savedBooksController.isLoading
+              ? const Center(
+                  child: CircularProgressIndicator(color: AppTheme.mainColor),
+                )
+              : savedBooksController.savedBooks?.isEmpty == true
+                  ? const Center(
+                      child: Text('There are no books'),
+                    )
+                  : ListView.builder(
+                      itemCount: savedBooksController.savedBooks?.length ?? 0,
+                      itemBuilder: (ctx, index) {
+                        return BookCardExtended(
+                          showSaveButton: true,
+                          item: savedBooksController.savedBooks![index],
+                          onPressed: (BookModel book) {
+                            Get.to(() => BookDetailsScreen(), arguments: book);
+                          },
+                          onSavePressed: () {
+                            BookModel book = savedBooksController.savedBooks![index];
+                            savedBooksController.unSaveBook(
+                              book,
+                              onSuccess: () {
+                                HomeController.to.topSeller?.firstWhereOrNull((element) => element == book)?.saveMark =
+                                    false;
+                              },
+                            );
+                          },
+                        );
+                      }),
+        );
+      }),
+    );
   }
 }

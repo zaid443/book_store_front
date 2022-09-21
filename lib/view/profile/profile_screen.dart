@@ -1,21 +1,21 @@
-
-import 'package:book_store/common/book.dart';
-import 'package:book_store/common/bordered_container.dart';
-import 'package:book_store/common/default_book.dart';
+import 'package:book_store/common/book_model.dart';
 import 'package:book_store/common/horizontal_card_list.dart';
-import 'package:book_store/services/auth.dart';
-import 'package:book_store/utilz/theme.dart';
+import 'package:book_store/controllers/profile_controller.dart';
+import 'package:book_store/services/auth_service.dart';
+import 'package:book_store/utils/theme.dart';
 import 'package:book_store/view/home/book_details_screen.dart';
 import 'package:book_store/view/home/shape.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
 import 'package:panara_dialogs/panara_dialogs.dart';
 
-class Profile_page extends StatelessWidget {
-  const Profile_page({Key? key}) : super(key: key);
-
+class ProfilePage extends StatelessWidget {
+  ProfilePage({Key? key}) : super(key: key);
+  final GetStorage localStorage = GetStorage();
+  final ProfileController profileController = Get.put(ProfileController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,14 +26,14 @@ class Profile_page extends StatelessWidget {
         body: Stack(
           children: <Widget>[
             ClipPath(
-              clipper: Customshape(),
-              child: Container(height: 350, color: const Color(0xff073b4c)),
+              clipper: CustomShape(),
+              child: Container(height: 300, color: const Color(0xff073b4c)),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 50, left: 25, right: 25),
+                  padding: const EdgeInsets.only(top: 20, left: 25, right: 25),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -47,57 +47,61 @@ class Profile_page extends StatelessWidget {
                       const SizedBox(
                         height: 10,
                       ),
-                      Text('anonymous ',
+                      Text(localStorage.read('name'),
                           style: GoogleFonts.inder(
                             fontSize: 30,
                             color: AppTheme.textwhite,
                             fontWeight: FontWeight.bold,
                           )),
-                      Text('0780 777 5777',
-                          style: GoogleFonts.cairo(
-                              fontSize: 20,
-                              color: AppTheme.textwhite,
-                              fontWeight: FontWeight.bold)),
+                      Text(
+                        localStorage.read('phoneNumber'),
+                        style: GoogleFonts.cairo(fontSize: 20, color: AppTheme.textwhite, fontWeight: FontWeight.bold),
+                      ),
                     ],
                   ),
                 ),
-                const SizedBox(
-                  height: 60,
-                ),
+                const SizedBox(height: 60),
                 Padding(
                   padding: const EdgeInsets.only(left: 25),
                   child: Text('Your purchases',
-                      style: GoogleFonts.cairo(
-                          fontSize: 23,
-                          color: AppTheme.textblack,
-                          fontWeight: FontWeight.bold)),
+                      style: GoogleFonts.cairo(fontSize: 23, color: AppTheme.textblack, fontWeight: FontWeight.bold)),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
-                SizedBox(
-                  height: 250,
-                  child: ListView.builder(
-                      physics: const BouncingScrollPhysics(),
-                      scrollDirection: Axis.horizontal,
-                      itemCount: defaultBookList.length,
-                      itemBuilder: (context, int index) {
-                        return HorizontalList(
-                          cover: defaultBookList[index].cover,
-                          auther: defaultBookList[index].auther,
-                          rate: defaultBookList[index].rate,
-                          name: defaultBookList[index].name,
-                          rateSize: 15,
-                          onPressed: (Book book) {
-                            Get.to(() => BookDetailsScreen(book: book));
-                          },
-                          item: defaultBookList[index],
-                        );
-                      }),
+                GetBuilder<ProfileController>(
+                  builder: (_) {
+                    return SizedBox(
+                      height: 250,
+                      child: profileController.isLoading
+                          ? const Center(
+                              child: CircularProgressIndicator(color: AppTheme.mainColor),
+                            )
+                          : profileController.purchasedBooks?.isEmpty == true
+                              ? const Center(
+                                  child: Text('There are no books'),
+                                )
+                              : ListView.builder(
+                                  physics: const BouncingScrollPhysics(),
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: profileController.purchasedBooks?.length ?? 0,
+                                  itemBuilder: (context, int index) {
+                                    return HorizontalList(
+                                      cover: profileController.purchasedBooks![index].bookImageUrl,
+                                      author: profileController.purchasedBooks![index].author,
+                                      rate: profileController.purchasedBooks![index].rate,
+                                      name: profileController.purchasedBooks![index].name,
+                                      rateSize: 15,
+                                      item: profileController.purchasedBooks![index],
+                                      onPressed: (BookModel book) {
+                                        Get.to(() => BookDetailsScreen(), arguments: book);
+                                      },
+                                    );
+                                  }),
+                    );
+                  },
                 ),
-                const SizedBox(
-                  height: 50,
-                ),
+                const SizedBox(height: 50),
                 Center(
                   child: InkWell(
                     onTap: () {
@@ -111,22 +115,19 @@ class Profile_page extends StatelessWidget {
                         onTapConfirm: () {
                           Get.back();
                         },
-                        color: Color(0xCC931621),
+                        color: const Color(0xCC931621),
                         panaraDialogType: PanaraDialogType.custom,
                       );
                     },
                     child: Container(
                       height: 50,
                       width: 120,
-                      decoration: BoxDecoration(
-                          color: Color(0xCC931621),
-                          borderRadius: BorderRadius.circular(10)),
+                      decoration:
+                          BoxDecoration(color: const Color(0xCC931621), borderRadius: BorderRadius.circular(10)),
                       child: Center(
                         child: Text('Sign Out ',
                             style: GoogleFonts.cairo(
-                                color: AppTheme.textwhite,
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold)),
+                                color: AppTheme.textwhite, fontSize: 15, fontWeight: FontWeight.bold)),
                       ),
                     ),
                   ),
@@ -134,14 +135,6 @@ class Profile_page extends StatelessWidget {
               ],
             )
           ],
-        )
-        );
+        ));
   }
 }
-
-
-
-
-
-
-

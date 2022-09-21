@@ -3,8 +3,7 @@ import 'package:book_store/view/Saved/savedbooklist.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../common/book.dart';
-
+import '../../common/book_model.dart';
 
 class SavedBookCard extends StatefulWidget {
   const SavedBookCard(
@@ -14,7 +13,9 @@ class SavedBookCard extends StatefulWidget {
       required this.auther,
       required this.rate,
       required this.rateSize,
-      required this.price, required this.item, required this.onPressed})
+      required this.price,
+      required this.item,
+      required this.onPressed})
       : super(key: key);
   final String cover;
   final String name;
@@ -22,8 +23,8 @@ class SavedBookCard extends StatefulWidget {
   final double rate;
   final double price;
   final double rateSize;
-  final Book item;
-  final Function(Book book) onPressed;
+  final BookModel item;
+  final Function(BookModel book) onPressed;
   @override
   State<SavedBookCard> createState() => _SavedBookCardState();
 }
@@ -43,7 +44,6 @@ class _SavedBookCardState extends State<SavedBookCard> {
           borderRadius: BorderRadius.circular(10),
         ),
         child: Row(
-          
           children: [
             SizedBox(
               height: 135,
@@ -64,28 +64,25 @@ class _SavedBookCardState extends State<SavedBookCard> {
               children: [
                 Text(
                   widget.name,
-                  style: GoogleFonts.cairo(
-                      fontSize: 19, fontWeight: FontWeight.bold),
+                  style: GoogleFonts.cairo(fontSize: 19, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(
                   height: 5,
                 ),
                 Text(
                   widget.auther,
-                  style: GoogleFonts.cairo(
-                      fontSize: 15, fontWeight: FontWeight.w200),
+                  style: GoogleFonts.cairo(fontSize: 15, fontWeight: FontWeight.w200),
                 ),
                 const SizedBox(
                   height: 5,
                 ),
-                RatingStarsWidget(rate: widget.rate, size: widget.rateSize),
+                RatingStarsWidget(rate: widget.rate, iconSize: widget.rateSize),
                 const SizedBox(
                   height: 5,
                 ),
                 Text(
                   '${widget.price.toString()}\$',
-                  style: GoogleFonts.cairo(
-                      fontSize: 15, fontWeight: FontWeight.w400),
+                  style: GoogleFonts.cairo(fontSize: 15, fontWeight: FontWeight.w400),
                 )
               ],
             ),
@@ -100,15 +97,11 @@ class _SavedBookCardState extends State<SavedBookCard> {
                   });
                   if (savestat && widget.item.saveMark) {
                     saveBooks.add(widget.item);
-                    
                   } else {
                     saveBooks.remove(widget.item);
-                    
                   }
                 },
-                icon: widget.item.saveMark 
-                    ? const Icon(Icons.bookmark)
-                    : const Icon(Icons.bookmark_outline))
+                icon: widget.item.saveMark ? const Icon(Icons.bookmark) : const Icon(Icons.bookmark_outline))
           ],
         ),
       ),

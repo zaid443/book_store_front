@@ -1,55 +1,84 @@
-import 'book.dart';
+import 'book_model.dart';
 
-List<Book> defaultBookList = [
-  Book(
-      cover: 'assets/images/1.jpg',
-      name: 'Animal Farm',
-      auther: 'George Orwell',
-      discrption:
-          'Anna Karenina (Keira Knightley), the wife of a Russian imperialminister (Jude Law), creates a high-society scandal by an affairwith Count Vronsky (Aaron Taylor-Johnson), a dashing cavalry officer in 19th-century St. Petersburg.',
-      price : 10.0,
-      rate: 4,
-      saveMark: false, pieces: 0,
-      
-      ),
-  Book(
-      cover: 'assets/images/2.jpg',
-      name: 'The Da Vinci Code',
-      auther: 'Dan Brown',
-      discrption:
-          'Anna Karenina (Keira Knightley), the wife of a Russian imperialminister (Jude Law), creates a high-society scandal by an affairwith Count Vronsky (Aaron Taylor-Johnson), a dashing cavalry officer in 19th-century St. Petersburg.',
-      price : 10.0,
-      rate: 4,pieces: 0,
-      saveMark: false),
-  Book(
-      cover: 'assets/images/3.jpg',
-      name: 'Anna Karenina',
-      auther: 'Leo Tolstoy',
-      discrption:
-          'Anna Karenina (Keira Knightley), the wife of a Russian imperialminister (Jude Law), creates a high-society scandal by an affairwith Count Vronsky (Aaron Taylor-Johnson), a dashing cavalry officer in 19th-century St. Petersburg.',
-      rate: 5,
-      price: 10.0,
-      saveMark: false,pieces: 0,
-      ),
-  Book(
-      cover: 'assets/images/4.jpg',
-      name: 'Fire And Blood',
-      auther: 'George R.R Martin',
-      discrption:
-          'Anna Karenina (Keira Knightley), the wife of a Russian imperialminister (Jude Law), creates a high-society scandal by an affairwith Count Vronsky (Aaron Taylor-Johnson), a dashing cavalry officer in 19th-century St. Petersburg.',
-      rate: 5,
-      price: 10.0,
-      saveMark: false,pieces: 0,
-      ),
-  Book(
-      cover: 'assets/images/5.jpg',
-      name: 'Lord Of The Ring',
-      auther: 'Tolkien',
-      discrption:
-          'Anna Karenina (Keira Knightley), the wife of a Russian imperialminister (Jude Law), creates a high-society scandal by an affairwith Count Vronsky (Aaron Taylor-Johnson), a dashing cavalry officer in 19th-century St. Petersburg.',
-      rate: 4,
-      price: 10.0,
-      saveMark: false,pieces: 0,
-      ),
+List<BookModel> defaultBookList = [
+  BookModel(
+    bookImageUrl: 'assets/images/1.jpg',
+    name: 'Animal Farm',
+    author: 'George Orwell',
+    description:
+        'Anna Karenina (Keira Knightley), the wife of a Russian imperialminister (Jude Law), creates a high-society scandal by an affairwith Count Vronsky (Aaron Taylor-Johnson), a dashing cavalry officer in 19th-century St. Petersburg.',
+    price: 10.0,
+    rate: 4,
+    saveMark: false,
+    qty: 0,
+    pages: 10,
+    language: 'AR',
+    totalSales: 4000,
+    id: 1,
+    genre: 'Test',
+  ),
+  BookModel(
+    bookImageUrl: 'assets/images/2.jpg',
+    name: 'The Da Vinci Code',
+    author: 'Dan Brown',
+    description:
+        'Anna Karenina (Keira Knightley), the wife of a Russian imperialminister (Jude Law), creates a high-society scandal by an affairwith Count Vronsky (Aaron Taylor-Johnson), a dashing cavalry officer in 19th-century St. Petersburg.',
+    price: 10.0,
+    rate: 4,
+    qty: 0,
+    saveMark: false,
+    pages: 10,
+    language: 'AR',
+    totalSales: 4000,
+    id: 2,
+    genre: 'Test',
+  ),
+  BookModel(
+    bookImageUrl: 'assets/images/3.jpg',
+    name: 'Anna Karenina',
+    author: 'Leo Tolstoy',
+    description:
+        'Anna Karenina (Keira Knightley), the wife of a Russian imperialminister (Jude Law), creates a high-society scandal by an affairwith Count Vronsky (Aaron Taylor-Johnson), a dashing cavalry officer in 19th-century St. Petersburg.',
+    rate: 5,
+    price: 10.0,
+    saveMark: false,
+    qty: 0,
+    pages: 10,
+    language: 'AR',
+    totalSales: 4000,
+    id: 3,
+    genre: 'Test',
+  ),
+  BookModel(
+    bookImageUrl: 'assets/images/4.jpg',
+    name: 'Fire And Blood',
+    author: 'George R.R Martin',
+    description:
+        'Anna Karenina (Keira Knightley), the wife of a Russian imperialminister (Jude Law), creates a high-society scandal by an affairwith Count Vronsky (Aaron Taylor-Johnson), a dashing cavalry officer in 19th-century St. Petersburg.',
+    rate: 5,
+    price: 10.0,
+    saveMark: false,
+    qty: 0,
+    pages: 10,
+    language: 'AR',
+    totalSales: 4000,
+    id: 4,
+    genre: 'Test',
+  ),
+  BookModel(
+    bookImageUrl: 'assets/images/5.jpg',
+    name: 'Lord Of The Ring',
+    author: 'Tolkien',
+    description:
+        'Anna Karenina (Keira Knightley), the wife of a Russian imperialminister (Jude Law), creates a high-society scandal by an affairwith Count Vronsky (Aaron Taylor-Johnson), a dashing cavalry officer in 19th-century St. Petersburg.',
+    rate: 4,
+    price: 10.0,
+    saveMark: false,
+    qty: 0,
+    pages: 10,
+    language: 'AR',
+    totalSales: 4000,
+    id: 5,
+    genre: 'Test',
+  ),
 ];
-

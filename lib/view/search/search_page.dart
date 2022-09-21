@@ -1,182 +1,194 @@
-import 'package:book_store/common/default_book.dart';
+import 'package:book_store/common/book_model.dart';
+import 'package:book_store/controllers/search_controller.dart';
+import 'package:book_store/services/book_service.dart';
+import 'package:book_store/utils/enums.dart';
+import 'package:book_store/view/home/book_details_screen.dart';
+import 'package:book_store/view/search/filter_result.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get/get.dart';
 
-import '../../common/book.dart';
-import '../home/book_details_screen.dart';
-import 'default_search_page.dart';
-import 'search_result_card.dart';
-import 'filter_list.dart';
+import 'filter_widgets.dart';
 
-class Search extends StatefulWidget {
-  const Search({super.key});
-
-  @override
-  State<Search> createState() => _SearchState();
-}
-
-class _SearchState extends State<Search> {
-  List<Book> bookOnSearch = [];
-  TextEditingController searchController = TextEditingController();
-  bool firstBox = true;
-  bool secondBox = false;
+class Search extends StatelessWidget {
+  Search({super.key});
+  final SearchController controller = Get.put(SearchController());
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.only(left: 20, right: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 50),
-              child: Container(
-                height: 56,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10)),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Icons.search,
-                        size: 30,
-                        color: Color.fromARGB(120, 0, 0, 0),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(
-                        child: TextField(
-                          onChanged: (value) {
-                            setState(() {
-                              bookOnSearch= defaultBookList
-                                  .where((element) => element.auther
-                                      .toLowerCase()
-                                      .contains(value.toLowerCase()))
-                                  .toList();
-                              bookOnSearch.isNotEmpty? null :bookOnSearch= defaultBookList
-                                  .where((element) => element.name
-                                      .toLowerCase()
-                                      .contains(value.toLowerCase()))
-                                  .toList();
-                            });
-                          },
-                          controller: searchController,
-                          decoration: const InputDecoration(
-                              border: InputBorder.none,
-                              hintText: 'Search Book name, Auther name'),
-                        ),
-                      ),
-                      // Spacer(),
-                      Container(
-                        child: searchController.text.isEmpty
-                            ? null
-                            : IconButton(
-                                onPressed: () {
-                                  searchController.clear();
-                                },
-                                icon: const Icon(
-                                  Icons.close,
-                                  color: Color.fromARGB(141, 7, 59, 76),
-                                )),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            Expanded(
-              child: searchController.text.isNotEmpty && bookOnSearch.isNotEmpty
-                  ? ListView.builder(
-                    itemCount:bookOnSearch.length ,
-                    itemBuilder: (context, index) {
-                    
-                      return SearchCard(
-                        cover: bookOnSearch[index].cover,
-                        name: bookOnSearch[index].name,
-                        auther: bookOnSearch[index].auther,
-                        rate: bookOnSearch[index].rate,
-                        rateSize: 15,
-                        price: bookOnSearch[index].price,
-                        item: bookOnSearch[index],
-                        onPressed: (Book book) {
-                          Get.to(() => BookDetailsScreen(book: book));
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.only(left: 20, right: 20),
+          child: GetBuilder<SearchController>(builder: (_) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 50),
+                  child: Container(
+                    height: 56,
+                    decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TypeAheadField<BookModel>(
+                        suggestionsCallback: (String pattern) async {
+                          if (pattern.isNotEmpty) {
+                            Response<List<BookModel>?> res = await BookService().search(pattern);
+                            if (res.statusCode == 200 && res.body != null) {
+                              return res.body!;
+                            } else {
+                              return [];
+                            }
+                          }
+                          return [];
                         },
-                      );
-                    })
-                  : Column(
-                      children: [
-                        Row(
-                          children: [
-                            Expanded(
-                                flex: 5,
-                                child: FilterContainer(
-                                  label: 'Genres',
-                                  ispressed: firstBox,
-                                  onpress: () {
-                                    setState(() {
-                                      if (firstBox == false) {
-                                        firstBox = !firstBox;
-                                        secondBox = !secondBox;
-                                      } else {
-                                        return null;
-                                      }
-                                    });
-                                  },
-                                )),
-                            const SizedBox(
-                              width: 30,
+                        itemBuilder: (_, BookModel suggestion) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ListTile(
+                              leading: SizedBox(
+                                child: Image.network(suggestion.bookImageUrl),
+                              ),
+                              title: Text(suggestion.name),
+                              subtitle: Text(suggestion.author),
                             ),
-                            Expanded(
-                              flex: 5,
-                              child: FilterContainer(
-                                label: 'Authers',
-                                ispressed: secondBox,
-                                onpress: () {
-                                  setState(() {
-                                    if (secondBox == false) {
-                                      firstBox = !firstBox;
-                                      secondBox = !secondBox;
-                                    } else {
-                                      return null;
-                                    }
-                                  });
-                                },
+                          );
+                        },
+                        keepSuggestionsOnLoading: true,
+                        onSuggestionSelected: (BookModel suggestion) {
+                          Get.to(() => BookDetailsScreen(), arguments: suggestion);
+                        },
+                        noItemsFoundBuilder: (_) {
+                          return const Padding(
+                            padding: EdgeInsets.all(20.0),
+                            child: Text(
+                              "No books found!",
+                              textAlign: TextAlign.center,
+                            ),
+                          );
+                        },
+                        textFieldConfiguration: TextFieldConfiguration(
+                          controller: controller.searchController,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            prefixIcon: const Icon(
+                              Icons.search,
+                              size: 30,
+                              color: Color.fromARGB(120, 0, 0, 0),
+                            ),
+                            hintText: 'Search Book name, Author name',
+                            suffixIcon: GestureDetector(
+                              onTap: () => controller.searchController.clear(),
+                              child: const Icon(
+                                Icons.close,
+                                color: Color.fromARGB(141, 7, 59, 76),
                               ),
                             ),
-                          ],
+                          ),
                         ),
-                        Expanded(
-                          child: GridView.builder(
-                              physics: const BouncingScrollPhysics(),
-                              itemCount: firstBox
-                                  ? DefaultGenres.length
-                                  : DefaultAuths.length,
-                              gridDelegate:
-                                  const SliverGridDelegateWithMaxCrossAxisExtent(
-                                      maxCrossAxisExtent: 200,
-                                      crossAxisSpacing: 10,
-                                      mainAxisSpacing: 10,
-                                      childAspectRatio: 0.8),
-                              itemBuilder: (context, index) {
-                                return FilterCard(
-                                  filter: firstBox,
-                                  index: index,
-                                );
-                              }),
+                        suggestionsBoxDecoration: const SuggestionsBoxDecoration(
+                          color: Colors.white,
                         ),
-                      ],
+                      ),
                     ),
-            )
-          ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                Expanded(
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                              flex: 5,
+                              child: FilterContainer(
+                                label: 'Genres',
+                                isActive: controller.genreFlag,
+                                onPress: () {
+                                  controller.genreFlag = true;
+                                  controller.authorFlag = false;
+                                  controller.update();
+                                },
+                              )),
+                          const SizedBox(
+                            width: 30,
+                          ),
+                          Expanded(
+                            flex: 5,
+                            child: FilterContainer(
+                              label: 'Authors',
+                              isActive: controller.authorFlag,
+                              onPress: () {
+                                controller.genreFlag = false;
+                                controller.authorFlag = true;
+                                controller.update();
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                      Expanded(
+                        child: GridView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            itemCount:
+                                controller.genreFlag ? controller.genres?.length ?? 0 : controller.authors?.length ?? 0,
+                            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                              maxCrossAxisExtent: 200,
+                              crossAxisSpacing: 10,
+                              mainAxisSpacing: 10,
+                              childAspectRatio: 0.8,
+                            ),
+                            itemBuilder: (context, index) {
+                              return FilterCard(
+                                title: controller.genreFlag
+                                    ? controller.genres![index].name
+                                    : controller.authors![index].name,
+                                imageUrl: controller.genreFlag
+                                    ? controller.genres![index].genresImageUrl
+                                    : controller.authors![index].authorImageUrl,
+                                onTap: () {
+                                  Get.to(
+                                    () => FilterResultScreen(),
+                                    arguments: {
+                                      'filterType': controller.genreFlag ? FilterType.genre : FilterType.author,
+                                      'title': controller.genreFlag
+                                          ? controller.genres![index].name
+                                          : controller.authors![index].name,
+                                    },
+                                  );
+                                },
+                              );
+                            }),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            );
+          }),
         ),
       ),
     );
   }
 }
+
+// TextField(
+//                       controller: controller.searchController,
+//                       decoration: InputDecoration(
+//                           border: InputBorder.none,
+//                           prefixIcon: const Icon(
+//                             Icons.search,
+//                             size: 30,
+//                             color: Color.fromARGB(120, 0, 0, 0),
+//                           ),
+//                           hintText: 'Search Book name, Author name',
+//                           suffixIcon: GestureDetector(
+//                             child: const Icon(
+//                               Icons.close,
+//                               color: Color.fromARGB(141, 7, 59, 76),
+//                             ),
+//                           )),
+//                     )

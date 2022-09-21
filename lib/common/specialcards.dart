@@ -2,7 +2,7 @@ import 'package:book_store/common/ratin_star.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'book.dart';
+import 'book_model.dart';
 
 class BookCard extends StatelessWidget {
   const BookCard({
@@ -10,68 +10,67 @@ class BookCard extends StatelessWidget {
     required this.item,
     required this.onPressed,
   }) : super(key: key);
-  final Book item;
-  final Function(Book book) onPressed;
+  final BookModel item;
+  final Function(BookModel book) onPressed;
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => onPressed(item),
       child: Container(
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10)),
+          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10)),
           margin: const EdgeInsets.symmetric(horizontal: 0.5),
           child: Row(
             children: [
-              Container(
-                decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(10)),
-                margin: const EdgeInsets.only(left: 10, top: 10, bottom: 10),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Image.asset(
-                    item.cover,
-                    height: 350,
-                    fit: BoxFit.fill,
+              Expanded(
+                flex: 3,
+                child: Container(
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                  margin: const EdgeInsets.only(left: 10, top: 10, bottom: 10),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image.network(
+                      item.bookImageUrl,
+                      height: 200,
+                      fit: BoxFit.fill,
+                    ),
                   ),
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.only(left: 8),
+              const SizedBox(width: 8),
+              Expanded(
+                flex: 4,
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const SizedBox(
-                      height: 10,
-                    ),
+                    const SizedBox(height: 10),
                     Text(
                       item.name,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: GoogleFonts.cairo(
-                          fontSize: 22, fontWeight: FontWeight.bold),
+                      style: GoogleFonts.cairo(fontSize: 22, fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      item.auther,
+                      item.author,
                       style: GoogleFonts.cairo(
-                          color: const Color.fromARGB(166, 0, 0, 0),
-                          fontSize: 18,
-                          fontWeight: FontWeight.normal),
+                        color: Colors.black54,
+                        fontSize: 16,
+                        fontWeight: FontWeight.normal,
+                      ),
                     ),
-                    const SizedBox(
-                      height: 8,
+                    const SizedBox(height: 5),
+                    Row(
+                      children: [
+                        RatingStarsWidget(
+                          iconSize: 20,
+                          rate: item.rate,
+                        ),
+                        const Spacer()
+                      ],
                     ),
-                    RatingStarsWidget(
-                      size: 20,
-                      rate: item.rate,
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
+                    const SizedBox(height: 5),
                     Text(
                       '${item.price.toString()}\$',
-                      style: GoogleFonts.cairo(
-                          fontSize: 16, fontWeight: FontWeight.w400),
+                      style: GoogleFonts.cairo(fontSize: 16, fontWeight: FontWeight.w400),
                     ),
                     Text(
                       'Tap to see more >>',

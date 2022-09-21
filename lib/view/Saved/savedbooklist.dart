@@ -1,3 +1,3 @@
-import '../../common/book.dart';
+import '../../common/book_model.dart';
 
-List<Book> saveBooks = [];
+List<BookModel> saveBooks = [];

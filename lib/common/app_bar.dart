@@ -1,4 +1,4 @@
-import 'package:book_store/utilz/theme.dart';
+import 'package:book_store/utils/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 

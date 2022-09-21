@@ -1,42 +1,24 @@
-import 'package:book_store/common/ratin_star.dart';
-import 'package:book_store/view/Saved/savedbooklist.dart';
-import 'package:book_store/view/cart/cart_book_list.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:panara_dialogs/panara_dialogs.dart';
 import 'package:get/get.dart';
-import '../../common/book.dart';
+import '../../common/book_model.dart';
 
-class CartBookCard extends StatefulWidget {
-  const CartBookCard(
-      {Key? key,
-      required this.cover,
-      required this.name,
-      required this.auther,
-      required this.rate,
-      required this.rateSize,
-      required this.price,
-      required this.item,
-      required this.onPressed})
-      : super(key: key);
-  final String cover;
-  final String name;
-  final String auther;
-  final double rate;
-  final double price;
-  final double rateSize;
-  final Book item;
-  final Function(Book book) onPressed;
-  @override
-  State<CartBookCard> createState() => _CartBookCardState();
-}
+class CartBookCard extends StatelessWidget {
+  const CartBookCard({
+    Key? key,
+    required this.item,
+    required this.onPressed,
+    required this.onRemove,
+  }) : super(key: key);
 
-class _CartBookCardState extends State<CartBookCard> {
-  bool savestat = true;
+  final BookModel item;
+  final Function(BookModel book) onPressed;
+  final Function(BookModel book) onRemove;
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => widget.onPressed(widget.item),
+      onTap: () => onPressed(item),
       child: Container(
         height: 150,
         padding: const EdgeInsets.all(8),
@@ -52,74 +34,60 @@ class _CartBookCardState extends State<CartBookCard> {
               width: 95,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8),
-                child: Image.asset(
-                  widget.cover,
+                child: Image.network(
+                  item.bookImageUrl,
                   fit: BoxFit.fill,
                 ),
               ),
             ),
-            const SizedBox(
-              width: 10,
+            const SizedBox(width: 10),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    item.name,
+                    overflow: TextOverflow.ellipsis,
+                    style: GoogleFonts.cairo(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    item.author,
+                    style: GoogleFonts.cairo(fontSize: 15, fontWeight: FontWeight.w200),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Text('${item.qty} Pcs'),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    '${item.price.toString()}\$',
+                    style: GoogleFonts.cairo(fontSize: 15, fontWeight: FontWeight.w400),
+                  )
+                ],
+              ),
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  widget.name,
-                  style: GoogleFonts.cairo(
-                      fontSize: 19, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Text(
-                  widget.auther,
-                  style: GoogleFonts.cairo(
-                      fontSize: 15, fontWeight: FontWeight.w200),
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Text('${widget.item.pieces} Pcs'),
-                const SizedBox(
-                  height: 5,
-                ),
-                Text(
-                  '${widget.price.toString()}\$',
-                  style: GoogleFonts.cairo(
-                      fontSize: 15, fontWeight: FontWeight.w400),
-                )
-              ],
-            ),
-            const Spacer(),
             IconButton(
-                iconSize: 30,
-                color: const Color(0xff931621),
-                onPressed: () {
-                  setState(() {
-                    PanaraConfirmDialog.showAnimatedGrow(
-                      context,
-                      title: "Remov from Cart",
-                      message: "Do you want to remove this Book?",
-                      confirmButtonText: "Cancel",
-                      cancelButtonText: "Remove",
-                      onTapCancel: () {
-                        cart_books.remove(widget.item);
-                        total_price =
-                      total_price - (widget.item.pieces * widget.item.price);
-                        total_piece = total_piece - widget.item.pieces;
-                        widget.item.pieces = 0;
-                        Get.back();
-                      },
-                      onTapConfirm: () {
-                        Get.back();
-                      },
-                      color: const Color(0xff931621),
-                      panaraDialogType: PanaraDialogType.custom,
-                    );
-                  });
-                },
-                icon: const Icon(Icons.do_disturb_on_outlined))
+              iconSize: 30,
+              color: const Color(0xff931621),
+              onPressed: () {
+                PanaraConfirmDialog.showAnimatedGrow(
+                  context,
+                  title: "Remove from Cart",
+                  message: "Do you want to remove this Book?",
+                  confirmButtonText: "Remove",
+                  cancelButtonText: "Cancel",
+                  onTapCancel: () {
+                    Get.back();
+                  },
+                  onTapConfirm: () => onRemove(item),
+                  color: const Color(0xff931621),
+                  panaraDialogType: PanaraDialogType.custom,
+                );
+              },
+              icon: const Icon(Icons.do_disturb_on_outlined),
+            )
           ],
         ),
       ),
