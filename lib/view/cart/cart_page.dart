@@ -15,7 +15,9 @@ class Cart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cart', style: GoogleFonts.cairo(fontSize: 25, color: Colors.black)),
+        title: Center(
+            child: Text('Cart',
+                style: GoogleFonts.cairo(fontSize: 25, color: Colors.black))),
         elevation: 0,
         backgroundColor: Colors.transparent,
         excludeHeaderSemantics: true,

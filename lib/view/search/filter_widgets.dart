@@ -61,6 +61,7 @@ class FilterCard extends StatelessWidget {
                 title,
                 style: GoogleFonts.cairo(fontSize: 18, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
               ),
               Expanded(
                 child: Image.network(

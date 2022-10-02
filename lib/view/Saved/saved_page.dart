@@ -15,9 +15,12 @@ class SavedPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Saved',
-          style: GoogleFonts.cairo(fontSize: 25, textStyle: const TextStyle(color: Colors.black)),
+        title: Center(
+          child: Text(
+            'Saved',
+            style: GoogleFonts.cairo(
+                fontSize: 25, textStyle: const TextStyle(color: Colors.black)),
+          ),
         ),
         elevation: 0,
         backgroundColor: Colors.transparent,
