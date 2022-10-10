@@ -114,7 +114,7 @@ class BookDetailsScreen extends StatelessWidget {
                                 Column(
                                   children: [
                                     Text('Pages', style: GoogleFonts.cairo(fontSize: 16)),
-                                    Text('200', style: GoogleFonts.cairo(fontSize: 16)),
+                                    Text(controller.book.pages.toString(), style: GoogleFonts.cairo(fontSize: 16)),
                                   ],
                                 ),
                                 const VerticalDivider(
